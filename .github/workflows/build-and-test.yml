@@ -1,27 +1,37 @@
+# Workflow-a ad veririk
 name: Java CI with Gradle
 
+# Workflow-u işə salacaq tətikləyiciləri (events) təyin edirik
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
+# Workflow-un tapşırıqlarını (jobs) təyin edirik
 jobs:
+  # "build" adında bir tapşırıq yaradırıq
   build:
+    # Bu tapşırığın çalışacağı virtual mühiti (runner) seçirik
     runs-on: ubuntu-latest
 
+    # Tapşırığın addımlarını (steps) təyin edirik
     steps:
+      # Addım 1: Kodu repozitoriyadan runner-a köçürürük
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Addım 2: Java Development Kit (JDK) qururuq
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # Addım 3: Gradle Wrapper-a icra icazəsi veririk
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # Addım 4: Gradle ilə layihəni qururuq və test edirik
       - name: Build and test with Gradle
         run: ./gradlew build
